@@ -1,9 +1,16 @@
 import praw
+import os
+from dotenv import load_dotenv
 
-# Hardcoded credentials (make sure they're valid)
-CLIENT_ID = "your_client_id_here"
-CLIENT_SECRET = "your_client_secret_here"
-USER_AGENT = "mac:reddit-user-persona-extractor:v1.0 (by /u/your_app_name)"
+# Load Reddit API credentials from .env
+load_dotenv()
+
+CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
+USER_AGENT = os.getenv("REDDIT_USER_AGENT")
+
+if not all([CLIENT_ID, CLIENT_SECRET, USER_AGENT]):
+    print("⚠️ Warning: Missing Reddit API credentials. Create a .env file with keys.")
 
 def scrape_user_data(username, post_limit=30, comment_limit=30):
     try:
@@ -21,7 +28,7 @@ def scrape_user_data(username, post_limit=30, comment_limit=30):
         for submission in user.submissions.new(limit=post_limit):
             posts.append({
                 "title": submission.title,
-                "selftext": submission.selftext,
+                "selftext": submission.selftext or "",
                 "subreddit": submission.subreddit.display_name,
                 "url": submission.url
             })
