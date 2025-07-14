@@ -1,9 +1,9 @@
 import praw
 
 # Hardcoded credentials (make sure they're valid)
-CLIENT_ID = "yrB1R0tjF6iHWsTpz_WTMg"
-CLIENT_SECRET = "pzd9TVQi_PXuKkHze_yp1aIT9g6jmA"
-USER_AGENT = "mac:reddit-user-persona-extractor:v1.0 (by /u/diligent-recover-238)"
+CLIENT_ID = "your_client_id_here"
+CLIENT_SECRET = "your_client_secret_here"
+USER_AGENT = "mac:reddit-user-persona-extractor:v1.0 (by /u/your_app_name)"
 
 def scrape_user_data(username, post_limit=30, comment_limit=30):
     try:
