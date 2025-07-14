@@ -1,38 +1,74 @@
-- I am a professional and a sociologist.
-- I am a social psychologist.
-- I am an author.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I am a social psychologist.
-- I
+User Persona: u/kojied**
+
+**Emotional Tone**  
+- Tone: Neutral/Reserved  
+- Average Sentiment Score: 0.105  
+
+**Top Subreddits**: ManorLords, AskReddit, VisionPro, OnePiece, plantclinic  
+**Top Keywords**: the, to, a, i, and, of, in, is, you, that
+
+---
+
+**Personality Traits**  
+(Score each trait from 0 to 10 and give a citation from a post or comment)
+
+- Introversion: 7  
+  _"I just wanted a quiet night but ended up at a college party..."_ [POST: r/newyorkcity]
+- Empathy: 8  
+  _"Who am I to judge how others enjoy this adventurous city."_ [POST: r/newyorkcity]
+
+**Interests & Hobbies**  
+- Tech Enthusiast (Vision Pro, ChatGPT) [POST: r/VisionPro]
+- Anime/Gaming Fan (mentions Edgerunners, Pokemon) [POST: r/VisionPro]
+
+**Writing Style**  
+- Thoughtful, narrative, reflective [POST: r/newyorkcity]  
+- Curious and analytical [POST: r/visionosdev]
+
+**Political/Philosophical Leanings**  
+- Open to discourse (asks questions in r/Conservative, r/AskReddit)  
+- Mildly libertarian leanings [POST: r/Conservative]
+
+**Likely Profession/Field**  
+- iOS Developer or Tech Professional [POST: r/visionosdev]
+
+Reddit Activity Snippets:
+[POST in r/newyorkcity]
+Title: I feel violated by intern season
+There's this bar that I frequent a few blocks away from my house. Technically different neighborhood, but generally has a mature vibe with people who like music and to dance. Today when I went to the bar and all of a sudden I felt like I was at a college basement party. I thought that I must have been hallucinating, but Then a girl pointed at me and referred to me as the old person. That's when I knew I had to get out of there.
+ I was at the wrong party. 
+
+As I walk back home, all of a sudden I realize that there were now tens of thousands of 18 year-old 19 year-old 20-year-olds who were all living on top of each other and were super young and horny to basically use the New York nightlife as their own personal orgy dome.
+ Naturally I felt violated
+
+But then again, I thought to myself. Am I not the same as they are, just at a longer time horizon? I'm also a transient being in the city. They might only be here for three months, but I've only been here for three years as well. As a matter fact, there are bunch of people have done this for generations where their parents and their grandparents and their grandparents all met in New York, and they all decided to live somewhere in the broader region whether it be Westchester, Wilmington, Big Indian, Boston, etc. 
+New York City is equally adventurous to each, so who am I to judge how others enjoy this adventurous city.
+
+[POST in r/AskReddit]
+Title: H1B holders, what are your thoughts on the narrative that you are being exploited?
+
+
+[POST in r/AskReddit]
+Title: H1B holders, do you feel exploited, or see it as an opportunity to build a better life for you in the US?
+
+
+[POST in r/nba]
+Title: What needs to happen for the league to review the inconsistencies of the refs?
+[removed]
+
+[POST in r/Conservative]
+Title: Are you guys for/against banning Tiktok in the US?
+[removed]
+
+[POST in r/GenZ]
+Title: What’s a movie that best represents your childhood?
+There's so many coming of age movies for boomers and millennials, what about for gen-Z?
+
+[POST in r/VisionPro]
+Title: Spacial tours with 3D map and 360˚ video
+
+
+[POST in r/visionosdev]
+Title: Best blogs, tutorial channels to learn
+Hey I’m an iOS developer building in visionOS. Do people have recommendations on resources to catch up on new featuresets for spacial computing?
+3 It can't Be By Brian A., Softer In his previous reply , The Post Like But We're On Here To Talk About Some More Casualties Of Us "What if we did Not Gave And He Would Say Yes! All For Now This : If You Had Said 'And he'd Done With His Worry Because No Thang Or Maybe Cute People At Once Was Very Sure;a Since Than Got Too Much Did Donay Even Though These Before Him Tell us too Young After When Callin Which Is My Way Back Again She Could Me Although Yet Who Can Have Been Kind

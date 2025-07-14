@@ -5,6 +5,7 @@ import os
 from reddit_scraper import scrape_user_data
 from scraped_analyzer import analyze_scraped_data
 from persona_builder import generate_persona
+from persona_pdf_generator import save_persona_as_pdf  # ✅ 1. IMPORT HERE
 
 def extract_username_from_url(url):
     return url.strip("/").split("/")[-1]
@@ -39,6 +40,9 @@ def main():
 
     print(f"📄 Saving persona to text file...")
     save_persona_to_file(username, persona_text)
+
+    # ✅ 2. Generate PDF
+    save_persona_as_pdf(username, analysis, user_data, persona_text)
 
 if __name__ == "__main__":
     main()

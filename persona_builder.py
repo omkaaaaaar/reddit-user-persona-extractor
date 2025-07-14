@@ -1,41 +1,91 @@
 # persona_builder.py
 
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from transformers import GPT2Tokenizer, GPT2LMHeadModel
+import torch
 
-model_name = "distilgpt2"  # optimized for 8GB RAM
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+# Load model and tokenizer
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2-medium")
+model = GPT2LMHeadModel.from_pretrained("gpt2-medium")
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+model.to(device)
 
 def generate_persona(username, user_data, analysis):
-    """Generate a user persona from scraped Reddit data and tone analysis."""
-    text_blocks = []
+    """Generates a structured persona profile with categories, scores, and citations."""
+    formatted_text = ""
 
-    for p in user_data.get("posts", []):
-        text_blocks.append(f"[POST in r/{p['subreddit']}]\n{p['title']}\n{p['selftext']}\n")
+    # Prepare text for LLM from posts/comments
+    for post in user_data.get("posts", []):
+        formatted_text += f"[POST in r/{post['subreddit']}]\nTitle: {post['title']}\n{post['selftext']}\n\n"
 
-    for c in user_data.get("comments", []):
-        text_blocks.append(f"[COMMENT in r/{c['subreddit']}]\n{c['body']}\n")
+    for comment in user_data.get("comments", []):
+        formatted_text += f"[COMMENT in r/{comment['subreddit']}]\n{comment['body']}\n(Link: {comment['link']})\n\n"
 
-    sample_text = "\n".join(text_blocks[:10])[:1500]
+    formatted_text = formatted_text[:6000]  # Trim for safety
 
     prompt = f"""
-You are an AI sociologist. Analyze the Reddit activity of u/{username} to generate a detailed persona.
+You are a behavioral psychologist and UX researcher.
 
-Insights:
-- Frequent Subreddits: {', '.join([s[0] for s in analysis['top_subreddits']])}
-- Emotional Tone: {analysis['emotional_tone']} (Score: {analysis['avg_sentiment']})
-- Top Keywords: {', '.join([w[0] for w in analysis['top_keywords']])}
+Using the Reddit activity of user u/{username} and the emotional/subreddit analysis below, generate a structured persona profile like this format:
 
-Reddit Sample:
-{sample_text}
+---
+**User Persona: u/{username}**
 
-Persona:
+**Emotional Tone**  
+- Tone: {analysis['emotional_tone']}  
+- Average Sentiment Score: {analysis['avg_sentiment']}  
+
+**Top Subreddits**: {', '.join([s[0] for s in analysis['top_subreddits']])}  
+**Top Keywords**: {', '.join([k[0] for k in analysis['top_keywords']])}
+
+---
+
+**Personality Traits**  
+(Score each trait from 0 to 10 and give a citation from a post or comment)
+
+- Introversion: 7  
+  _"I just wanted a quiet night but ended up at a college party..."_ [POST: r/newyorkcity]
+- Empathy: 8  
+  _"Who am I to judge how others enjoy this adventurous city."_ [POST: r/newyorkcity]
+
+**Interests & Hobbies**  
+- Tech Enthusiast (Vision Pro, ChatGPT) [POST: r/VisionPro]
+- Anime/Gaming Fan (mentions Edgerunners, Pokemon) [POST: r/VisionPro]
+
+**Writing Style**  
+- Thoughtful, narrative, reflective [POST: r/newyorkcity]  
+- Curious and analytical [POST: r/visionosdev]
+
+**Political/Philosophical Leanings**  
+- Open to discourse (asks questions in r/Conservative, r/AskReddit)  
+- Mildly libertarian leanings [POST: r/Conservative]
+
+**Likely Profession/Field**  
+- iOS Developer or Tech Professional [POST: r/visionosdev]
+
+Reddit Activity Snippets:
+{formatted_text}
 """
 
     try:
-        result = generator(prompt, max_new_tokens=300, temperature=0.7, do_sample=True)[0]["generated_text"]
-        return result[len(prompt):].strip()
+        inputs = tokenizer(prompt, return_tensors="pt", truncation=True).to(device)
+        output = model.generate(
+            **inputs,
+            max_new_tokens=500,
+            temperature=0.7,
+            top_p=0.9,
+            repetition_penalty=1.15,
+            do_sample=True,
+            pad_token_id=tokenizer.eos_token_id
+        )
+        result = tokenizer.decode(output[0], skip_special_tokens=True)
+
+        # Remove repetition of prompt if model echoes it
+        if "User Persona:" in result:
+            result = result.split("User Persona:")[-1].strip()
+            result = f"User Persona: {result}"
+
+        return result
+
     except Exception as e:
-        print(f"Error generating persona: {e}")
-        return "Error generating persona."
+        print(f"LLM Error: {e}")
+        return "Error generating structured persona."
