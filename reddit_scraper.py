@@ -1,50 +1,35 @@
-# reddit_scraper.py
-
 import praw
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
-REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-REDDIT_USER_AGENT = "RedditPersonaScraper/0.1"
-
+# ✅ REPLACE these values with your actual Reddit App credentials
 reddit = praw.Reddit(
-    client_id=REDDIT_CLIENT_ID,
-    client_secret=REDDIT_CLIENT_SECRET,
-    user_agent=REDDIT_USER_AGENT
+    client_id="yrB1R0tjF6iHWsTpz_WTMg",
+    client_secret="pzd9TVQi_PXuKkHze_yp1aIT9g6jmA",
+    user_agent="mac:reddit-user-persona-extractor:v1.0 (by /u/Diligent-Recover-238)"
 )
 
-def scrape_user_data(username, max_items=100):
+def scrape_user_data(username):
+    posts = []
+    comments = []
+
     try:
         redditor = reddit.redditor(username)
 
-        user_data = {
-            "username": username,
-            "posts": [],
-            "comments": []
-        }
-
-        # Scrape posts
-        for submission in redditor.submissions.new(limit=max_items):
-            user_data["posts"].append({
-                "title": submission.title,
-                "selftext": submission.selftext,
-                "subreddit": str(submission.subreddit),
-                "url": submission.url
+        for post in redditor.submissions.new(limit=20):
+            posts.append({
+                "title": post.title,
+                "selftext": post.selftext,
+                "subreddit": str(post.subreddit),
+                "link": f"https://www.reddit.com{post.permalink}"
             })
 
-        # Scrape comments
-        for comment in redditor.comments.new(limit=max_items):
-            user_data["comments"].append({
+        for comment in redditor.comments.new(limit=30):
+            comments.append({
                 "body": comment.body,
                 "subreddit": str(comment.subreddit),
                 "link": f"https://www.reddit.com{comment.permalink}"
             })
 
-        return user_data
-
     except Exception as e:
-        print(f"Error scraping u/{username}: {e}")
-        return None
+        print(f"❌ Error scraping Reddit: {e}")
+
+    return {"posts": posts, "comments": comments}

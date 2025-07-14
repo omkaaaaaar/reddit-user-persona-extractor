@@ -3,37 +3,42 @@
 import sys
 import os
 from reddit_scraper import scrape_user_data
+from scraped_analyzer import analyze_scraped_data
 from persona_builder import generate_persona
-from utils import extract_username_from_url, save_persona_to_file
+
+def extract_username_from_url(url):
+    return url.strip("/").split("/")[-1]
+
+def save_persona_to_file(username, content):
+    os.makedirs("outputs", exist_ok=True)
+    path = f"outputs/{username}_persona.txt"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"✅ Persona for u/{username} saved at: {path}")
 
 def main():
     if len(sys.argv) != 2:
         print("Usage: python main.py <reddit_profile_url>")
         return
 
-    reddit_url = sys.argv[1]
-    username = extract_username_from_url(reddit_url)
+    profile_url = sys.argv[1]
+    username = extract_username_from_url(profile_url)
 
-    if not username:
-        print("Invalid Reddit profile URL.")
-        return
-
-    print(f"🔍 Scraping Reddit activity for u/{username}...")
+    print(f"\n🔍 Scraping Reddit activity for u/{username}...")
     user_data = scrape_user_data(username)
 
-    if not user_data:
-        print("❌ No user data found or scraping failed.")
-        return
+    print(f"📊 Analyzing emotional tone and subreddit trends...")
+    analysis = analyze_scraped_data(user_data)
 
-    print("🤖 Generating user persona using LLM...")
-    persona_text = generate_persona(username, user_data)
+    print(f"\n🧠 Emotional Tone: {analysis['emotional_tone']} (Sentiment Score: {analysis['avg_sentiment']})")
+    print(f"🔥 Top Subreddits: {[s[0] for s in analysis['top_subreddits']]}")
+    print(f"💬 Top Keywords: {[w[0] for w in analysis['top_keywords']]}\n")
 
-    print("📄 Saving persona to text file...")
-    output_path = os.path.join("outputs", f"{username}_persona.txt")
-    save_persona_to_file(output_path, persona_text)
+    print(f"🤖 Generating user persona using local LLM...")
+    persona_text = generate_persona(username, user_data, analysis)
 
-    print(f"✅ Persona for u/{username} saved at: {output_path}")
-
+    print(f"📄 Saving persona to text file...")
+    save_persona_to_file(username, persona_text)
 
 if __name__ == "__main__":
     main()
