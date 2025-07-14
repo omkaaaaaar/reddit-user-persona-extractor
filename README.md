@@ -34,7 +34,8 @@ Clone the repo:
 
 ```bash
 git clone https://github.com/yourusername/reddit-user-persona-extractor.git
-cd reddit-user-persona-extractor
+cd reddit-user-persona-extractor 
+```
 
 
 Install dependencies:
